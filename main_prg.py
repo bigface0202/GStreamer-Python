@@ -9,18 +9,19 @@ import time
 import vid_streamv3 as vs
 import cv2
 import sys
+import argparse
 
 '''
 Main class
 '''
 class mainStreamClass:
-    def __init__(self):
+    def __init__(self, address):
 
         #Current Cam
         self.camProcess = None
         self.cam_queue = None
         self.stopbit = None
-        self.camlink = '' #Add your RTSP cam link
+        self.camlink = address #Add your RTSP cam link
         self.framerate = 6
     
     def startMain(self):
@@ -93,5 +94,8 @@ class mainStreamClass:
 
 
 if __name__ == "__main__":
-    mc = mainStreamClass()
+    parser = argparse.ArgumentParser("RTSP Streaming")
+    parser.add_argument("--address", type=str, required=True)
+    args = parser.parse_args()
+    mc = mainStreamClass(args.address)
     mc.startMain()
